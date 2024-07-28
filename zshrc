@@ -1,4 +1,3 @@
-
 ##my
 # Устанавливаем правильный путь к Oh My Zsh
 ZSH=$HOME/.oh-my-zsh
@@ -15,7 +14,7 @@ source ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k/powerlevel10k
 function hacker_banner() {
     cat <<'EOF'
 
-              WHERE ARE YOU GOING 
+              WHERE ARE YOU GOING ! 
  
 EOF
 }
@@ -127,3 +126,38 @@ ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
+
+
+
+
+alias py='python3'
+alias cdcpp='cd all/cpp'
+alias cdpy='cd all/python'
+
+
+# Функция для компиляции и запуска C++ программ
+compile_and_run_cpp() {
+    if [ -z "$1" ]; then
+        echo "Usage: compile_and_run_cpp <source_file.cpp>"
+        return 1
+    fi
+    
+    local source_file="$1"
+    local executable_file="${source_file%.cpp}"
+
+    # Компиляция
+    g++ -std=c++17 -o "$executable_file" "$source_file"
+    if [ $? -ne 0 ]; then
+        echo "Compilation failed"
+        return 1
+    fi
+
+    # Запуск
+    ./"$executable_file"
+}
+
+# Алиас для удобного использования функции
+alias cpp='compile_and_run_cpp'
+
+#алиас для создание с++ файлов из шаблона - для шаблона тоже создана отделный скрипт и сделана как команда 
+alias mkcpp='function _mkcpp(){ if [[ $1 == *.cpp ]]; then echo "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Ваш код здесь\n    return 0;\n}" > "$1" && micro "$1"; else echo "Error: The file must have a .cpp extension"; fi; }; _mkcpp'
