@@ -1,0 +1,22 @@
+{
+    "Alt-/": "lua:comment.comment",
+    "Alt-Ctrl-c": "command:manager dash -c",
+    "Alt-Ctrl-f": "command:manager dash -f",
+    "Alt-Ctrl-l": "command:manager init",
+    "Alt-Ctrl-n": "command:manager dash -n",
+    "Alt-Ctrl-o": "command:manager dash",
+    "Alt-Ctrl-p": "command:manager dash -p",
+    "Alt-Ctrl-q": "command:manager info",
+    "Alt-Ctrl-r": "command:manager dash -r",
+    "Alt-Ctrl-s": "command:manager fmt",
+    "Alt-d": "command:definition",
+    "Alt-f": "command:format",
+    "Alt-k": "command:hover",
+    "Alt-p": "command:tree",
+    "Alt-r": "command:references",
+    "CtrlSpace": "command:lspcompletion",
+    "CtrlUnderscore": "lua:comment.comment",
+    "F12": "command:makeup",
+    "F5": "command:runit",
+    "F9": "command:makeupbg"
+}
