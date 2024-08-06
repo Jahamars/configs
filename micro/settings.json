@@ -1,0 +1,13 @@
+{
+    "clipboard": "terminal",
+    "colorscheme": "solarized",
+    "eofnewline": false,
+    "ftoptions": false,
+    "pluginrepos": [
+        "https://codeberg.org/micro-plugins/manager/raw/branch/main/repo.json"
+    ],
+    "softwrap": true,
+    "templates": {
+        "cpp": "~/.config/micro/templates/cpp"
+    }
+}
