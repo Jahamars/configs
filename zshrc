@@ -9,7 +9,7 @@ source ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k/powerlevel10k
 source $ZSH/oh-my-zsh.sh
 
 # ASCII Art Banner
-function hacker_banner() {
+function banner() {
     cat <<'EOF'
                                                         ┏┓┓ ┏┓┏┓                  
                                                         ┣┫┃•┏┛┣┓                  
@@ -21,9 +21,8 @@ function hacker_banner() {
  
 EOF
 }
-hacker_banner
+banner
 
-# Powerlevel10k prompt configuration for two-line prompt
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}╭─%f"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}╰─ =^..^= >%f "
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -48,8 +47,8 @@ POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator context dir dir_writable vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs command_execution_time time)
 POWERLEVEL9K_SHOW_CHANGESET=true
-POWERLEVEL9K_DIR_BACKGROUND='235'  # Цвет фона для пути каталога (~)
-POWERLEVEL9K_DIR_FOREGROUND='255'  # Цвет текста для пути каталога (~)
+POWERLEVEL9K_DIR_BACKGROUND='235'  
+POWERLEVEL9K_DIR_FOREGROUND='255' 
 HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
