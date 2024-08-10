@@ -71,7 +71,8 @@ plugins=(archlinux
     sudo
     zsh-syntax-highlighting)
 
-
+# Источник Oh My Zsh
+source $ZSH/oh-my-zsh.sh
 
 # Настройки подсветки синтаксиса
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
