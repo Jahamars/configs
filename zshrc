@@ -23,6 +23,7 @@ EOF
 }
 banner
 
+# Powerlevel10k prompt configuration for two-line prompt
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}╭─%f"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}╰─ =^..^= >%f "
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -47,8 +48,8 @@ POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator context dir dir_writable vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs command_execution_time time)
 POWERLEVEL9K_SHOW_CHANGESET=true
-POWERLEVEL9K_DIR_BACKGROUND='235'  
-POWERLEVEL9K_DIR_FOREGROUND='255' 
+POWERLEVEL9K_DIR_BACKGROUND='235'  # Цвет фона для пути каталога (~)
+POWERLEVEL9K_DIR_FOREGROUND='255'  # Цвет текста для пути каталога (~)
 HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
@@ -68,7 +69,8 @@ plugins=(archlinux
     cp
     dirhistory
     sudo
-    zsh-syntax-highlighting)
+    zsh-syntax-highlighting
+    zsh-autosuggestions)
 
 # Источник Oh My Zsh
 source $ZSH/oh-my-zsh.sh
@@ -153,3 +155,4 @@ alias cpp='compile_and_run_cpp'
 
 # Alias to create a new C++ file from a template
 alias mkcpp='function _mkcpp(){ if [[ $1 == *.cpp ]]; then echo "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code here\n    return 0;\n}" > "$1" && micro "$1"; else echo "Error: The file must have a .cpp extension"; fi; }; _mkcpp'
+
