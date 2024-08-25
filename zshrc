@@ -98,3 +98,5 @@ alias mkcpp='mkcpp'
 
 # отключаем звук 
 export NO_BELL=true
+setopt NO_BEEP
+
