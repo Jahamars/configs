@@ -1,10 +1,13 @@
-simplebreakreminder@castillodel.com
+user-theme-x@tuberry.github.io
 night-light-slider-updated@vilsbeg.codeberg.org
+simplebreakreminder@castillodel.com
 useless-gaps@pimsnel.com
 clipboard-history@alexsaveau.dev
 dashbar@fthx
 highlight-focus@pimsnel.com
 blur-my-shell@aunetx
+grand-theft-focus@zalckos.github.com
+rounded-window-corners@fxgn
 apps-menu@gnome-shell-extensions.gcampax.github.com
 auto-move-windows@gnome-shell-extensions.gcampax.github.com
 drive-menu@gnome-shell-extensions.gcampax.github.com
@@ -18,4 +21,3 @@ user-theme@gnome-shell-extensions.gcampax.github.com
 window-list@gnome-shell-extensions.gcampax.github.com
 windowsNavigator@gnome-shell-extensions.gcampax.github.com
 workspace-indicator@gnome-shell-extensions.gcampax.github.com
-rounded-window-corners@fxgn
