@@ -1,0 +1,29 @@
+[custom0]
+binding='<Shift><Super>e'
+command='flatpak run com.mattjakeman.ExtensionManager'
+name='extensions manager'
+
+[custom1]
+binding='<Super>t'
+command='kitty'
+name='kitty'
+
+[custom2]
+binding=''
+command='nautilus'
+name='files'
+
+[custom3]
+binding='<Super>f'
+command='nautilus'
+name='files'
+
+[custom4]
+binding='<Super>h'
+command='obsidian'
+name='obsidian '
+
+[custom5]
+binding='<Super>m'
+command='google-chrome-stable --app=https://music.youtube.com'
+name='cava'
