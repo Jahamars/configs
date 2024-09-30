@@ -1,0 +1,84 @@
+
+sudo pacman -Syu 
+sudo pacman -S kitty zsh ranger micro neofetch git github-cli zsh-syntax-highlighting python-pip python-pyflakes bluez btop
+
+
+git clone https://aur.archlinux.org/yay.git 
+cd yay 
+makepkg -si
+yay -S google-chrome obsidian gnome-extensions-cli smassh cava
+
+
+git clone https://github.com/Jahamars/configs.git
+cd configs 
+cp kitty.conf /home/mars/.config/kitty/
+
+
+sudo pacman -S zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+cd configs
+mv zshrc .zshrc ; cp .zshrc /home/mars/
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+
+gsettings set org.gnome.desktop.wm.keybindings begin-move "['<Super>e']"
+gsettings set org.gnome.desktop.wm.keybindings begin-resize "['<Super>c']"
+gsettings set org.gnome.desktop.wm.keybindings close "['<Super>x']"
+gsettings set org.gnome.desktop.wm.keybindings cycle-windows "['<Alt>Escape']"
+gsettings set org.gnome.desktop.wm.keybindings cycle-windows-backward "['<Shift><Alt>Escape']"
+gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>a']"
+gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>s']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-1 "['<Shift><Alt>1']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-2 "['<Shift><Alt>2']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-3 "['<Shift><Alt>3']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-4 "['<Shift><Alt>4']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['<Control><Shift><Alt>Down']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "['<Shift><Super>Left']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "['<Shift><Super>Right']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Up']"
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>q']"
+gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab', '<Alt>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab', '<Shift><Alt>Tab']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Alt>1']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-2 "['<Alt>2']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-3 "['<Alt>3']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-4 "['<Alt>4']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Control><Alt>Down']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Super>Page_Up', '<Super><Alt>Left', '<Control><Alt>Left']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Super>Page_Down', '<Super><Alt>Right', '<Control><Alt>Right']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['<Control><Alt>Up']"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>z']"
+gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>z']"
+gsettings set org.gnome.desktop.wm.keybindings unmaximize "['<Super>Down', '<Alt>F5']"
+# далше вручную 
+
+
+pip install tqdm rich urwid --break-system-packages
+
+gsettings set org.gnome.shell disable-extension-version-validation true
+
+
+gext install simplebreakreminder@castillodel.com grand-theft-focus@zalckos.github.com night-light-slider-updated@vilsbeg.codeberg.org blur-my-shell@aunetx
+user-theme-x@tuberry.github.io clipboard-history@alexsaveau.dev dashbar@fthx openbar@neuromorph highlight-focus@pimsnel.com system-monitor@gnome-shell-extensions.gcampax.github.com
+# настроит вручную
+
+вручную отключит автивные корнеры , и добавить фиксированный 3 воркспейса 
+
+cd
+cd /configs/micro
+mv settings.json /home/mars/.config/micro/  
+mv bindings.json /home/mars/.config/micro/ 
+
+cd
+cd .icons
+git clone https://github.com/v1ewport/NEURODANCE-CURSOR.git 
+git clone https://github.com/zayronxio/Zafiro-Nord-Dark.git
+
+
+sudo pacman -Rscun gnome-weather gnome-console gnome-maps gnome-connections gnome-tour gnome-contacts epiphany htop gnome-music snapshot flatpak 
+
+
