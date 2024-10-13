@@ -75,7 +75,8 @@ bindkey '^o' ranger-cd
 # Алиасы для часто используемых команд
 alias py='python3'
 alias cdcpp='cd ~/all/cpp'
-alias cdpy='cd ~/all/python'
+alias cdpy='cd ~/all/py'
+alias cdbash='cd ~/all/bash'
 
 # Функция для компиляции и запуска C++ программ
 compile_and_run_cpp() {
