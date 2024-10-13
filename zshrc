@@ -95,6 +95,10 @@ mkcpp() {
     fi
 }
 alias mkcpp='mkcpp'
+alias sshr='sudo systemctl restart sshd'
+alias sshs='sudo systemctl stop sshd'
+alias sshh='sudo systemctl status sshd'
+
 
 # отключаем звук 
 export NO_BELL=true
