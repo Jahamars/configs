@@ -95,7 +95,6 @@ mkcpp() {
         echo "Error: The file must have a .cpp extension"
     fi
 }
-alias mkcpp='mkcpp'
 alias sshr='sudo systemctl restart sshd'
 alias sshs='sudo systemctl stop sshd'
 alias sshh='sudo systemctl status sshd'
