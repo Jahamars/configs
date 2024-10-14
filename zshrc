@@ -99,6 +99,9 @@ alias mkcpp='mkcpp'
 alias sshr='sudo systemctl restart sshd'
 alias sshs='sudo systemctl stop sshd'
 alias sshh='sudo systemctl status sshd'
+alias sysend='rsync -avz --progress /home/mars/Documents/Obsidian user@ip:/home/mars/Документы'
+alias syget='rsync -avz --progress /home/mars/Documents/Obsidian user@ip:/home/mars/Документы'
+alias wip="ip -4 addr show dev wlan0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'"
 
 
 # отключаем звук 
