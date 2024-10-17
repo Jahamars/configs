@@ -1,7 +1,0 @@
-smassh-bin 3.1.3-1
-cava
-extension-manager
-google-chrome
-oneko
-yay
-yay-debug
