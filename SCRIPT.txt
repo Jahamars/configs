@@ -1,6 +1,10 @@
 
 sudo pacman -Syu 
-sudo pacman -S kitty zsh ranger micro neofetch git github-cli zsh-syntax-highlighting python-pip python-pyflakes bluez btop
+sudo pacman -S kitty zsh ranger micro nvim neofetch git github-cli zsh-syntax-highlighting python-pip python-pyflakes bluez btop
+
+
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 
 
 git clone https://aur.archlinux.org/yay.git 
