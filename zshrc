@@ -101,6 +101,7 @@ alias sshh='sudo systemctl status sshd'
 alias sysend='rsync -avz --progress /home/mars/Documents/Obsidian user@ip:/home/mars/Документы'
 alias syget='rsync -avz --progress /home/mars/Documents/Obsidian user@ip:/home/mars/Документы'
 alias wip="ip -4 addr show dev wlan0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'"
+alias note='micro ~/notes/today'
 
 
 # отключаем звук 
