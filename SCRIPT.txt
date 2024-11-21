@@ -83,6 +83,5 @@ git clone https://github.com/v1ewport/NEURODANCE-CURSOR.git
 git clone https://github.com/zayronxio/Zafiro-Nord-Dark.git
 
 
-sudo pacman -Rscun gnome-weather gnome-console gnome-maps gnome-connections gnome-tour gnome-contacts epiphany htop gnome-music snapshot flatpak 
-
+sudo pacman -Rscun gnome-weather gnome-console gnome-maps gnome-connections gnome-tour gnome-contacts epiphany htop gnome-music snapshot flatpak evolution-data-server
 
