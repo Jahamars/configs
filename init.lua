@@ -47,6 +47,8 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'preservim/vim-markdown'
 Plug 'numToStr/Comment.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/plenary.nvim'
 call plug#end()
 ]])
 
@@ -55,6 +57,11 @@ vim.cmd("syntax enable")        -- Включение подсветки син�
 vim.cmd("set background=dark") -- Или 'light', если нужно
 vim.cmd("colorscheme gruvbox") -- Применить Gruvbox
 
+
+-- Визуальный режим: Tab для сдвига вправо
+vim.api.nvim_set_keymap('v', '<Tab>', '>gv', { noremap = true, silent = true })
+-- Визуальный режим: Shift-Tab для сдвига влево
+vim.api.nvim_set_keymap('v', '<S-Tab>', '<gv', { noremap = true, silent = true })
 
 -- Настройка nvim-cmp
 local cmp = require'cmp'
@@ -68,4 +75,43 @@ cmp.setup({
     ['<C-p>'] = cmp.mapping.select_prev_item(), -- Перебор вверх
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Выбор завершения
   },
+})
+
+
+
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    if #vim.fn.argv() == 0 then -- Проверка, что Neovim открыт без аргументов
+      vim.cmd([[
+        enew
+        setlocal buftype=nofile
+        setlocal bufhidden=hide
+        setlocal nobuflisted
+        setlocal nonumber norelativenumber
+        setlocal noswapfile
+      ]])
+
+      -- Добавляем текст на стартовую страницу
+      local lines = {
+      	"", 
+      	"", 
+      	"", 
+      	"", 
+        "				   •  •     ┓•    ",
+        "				┏┳┓┓┏┓┓┏┳┓┏┓┃┓┏┏┳┓",
+        "				┛┗┗┗┛┗┗┛┗┗┗┻┗┗┛┛┗┗",
+        "",
+        "  				[e] Новый файл",
+        "  				[f] Найти файл",
+        "  				[q] Выход",
+      }
+      vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+
+      -- Настраиваем команды для кнопок
+      vim.api.nvim_buf_set_keymap(0, "n", "e", ":ene <BAR> startinsert<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(0, "n", "f", ":Telescope find_files<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(0, "n", "q", ":qa<CR>", { noremap = true, silent = true })
+    end
+  end,
 })
