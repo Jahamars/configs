@@ -49,6 +49,7 @@ Plug 'preservim/vim-markdown'
 Plug 'numToStr/Comment.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'mg979/vim-visual-multi'
 call plug#end()
 ]])
 
@@ -78,6 +79,10 @@ cmp.setup({
 })
 
 
+vim.keymap.set('n', 'd', '"_d', { noremap = true })
+vim.keymap.set('n', 'dd', '"_dd', { noremap = true })
+vim.keymap.set('x', 'd', '"_d', { noremap = true })
+vim.keymap.set('n', 'x', '"_x', { noremap = true })
 
 
 vim.api.nvim_create_autocmd("VimEnter", {
@@ -98,13 +103,14 @@ vim.api.nvim_create_autocmd("VimEnter", {
       	"", 
       	"", 
       	"", 
-        "				   •  •     ┓•    ",
-        "				┏┳┓┓┏┓┓┏┳┓┏┓┃┓┏┏┳┓",
-        "				┛┗┗┗┛┗┗┛┗┗┗┻┗┗┛┛┗┗",
+        "									   •  •     ┓•    ",
+        "									┏┳┓┓┏┓┓┏┳┓┏┓┃┓┏┏┳┓",
+        "									┛┗┗┗┛┗┗┛┗┗┗┻┗┗┛┛┗┗",
         "",
-        "  				[e] Новый файл",
-        "  				[f] Найти файл",
-        "  				[q] Выход",
+	"									[e] New File ",
+        "  									[f] Search ",
+        "  									[r] Recent files",
+        "  									[q] Quit ",
       }
       vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
 
@@ -112,6 +118,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
       vim.api.nvim_buf_set_keymap(0, "n", "e", ":ene <BAR> startinsert<CR>", { noremap = true, silent = true })
       vim.api.nvim_buf_set_keymap(0, "n", "f", ":Telescope find_files<CR>", { noremap = true, silent = true })
       vim.api.nvim_buf_set_keymap(0, "n", "q", ":qa<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(0, "n", "r", ":Telescope oldfiles<CR>", { noremap = true, silent = true })
     end
   end,
 })
