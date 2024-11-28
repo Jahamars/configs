@@ -50,9 +50,15 @@ Plug 'numToStr/Comment.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'mg979/vim-visual-multi'
+Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig' " LSP для настройки clangd
+Plug 'hrsh7th/cmp-nvim-lsp'  " Источник для LSP
+Plug 'hrsh7th/cmp-path'      " Источник для путей
 call plug#end()
 ]])
 
+
+--Plug 'L3MON4D3/LuaSnip'      " Сниппеты
 
 vim.cmd("syntax enable")        -- Включение подсветки синтаксиса
 vim.cmd("set background=dark") -- Или 'light', если нужно
@@ -103,14 +109,17 @@ vim.api.nvim_create_autocmd("VimEnter", {
       	"", 
       	"", 
       	"", 
-        "									   •  •     ┓•    ",
-        "									┏┳┓┓┏┓┓┏┳┓┏┓┃┓┏┏┳┓",
-        "									┛┗┗┗┛┗┗┛┗┗┗┻┗┗┛┛┗┗",
+      	"", 
+      	"", 
+      	"", 
+        "				   •  •     ┓•    ",
+        "				┏┳┓┓┏┓┓┏┳┓┏┓┃┓┏┏┳┓",
+        "				┛┗┗┗┛┗┗┛┗┗┗┻┗┗┛┛┗┗",
         "",
-	"									[e] New File ",
-        "  									[f] Search ",
-        "  									[r] Recent files",
-        "  									[q] Quit ",
+	"				[e] New File ",
+        "  				[f] Search ",
+        "  				[r] Recent files",
+        "  				[q] Quit ",
       }
       vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
 
@@ -122,3 +131,52 @@ vim.api.nvim_create_autocmd("VimEnter", {
     end
   end,
 })
+
+
+
+
+local cmp = require'cmp'
+cmp.setup({
+  mapping = {
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require('lspconfig').clangd.setup {
+  capabilities = capabilities,
+}
+
+
+vim.opt.pumheight = 10  -- Установить максимальную высоту всплывающего меню
+vim.opt.pumwidth = 50  -- Установить максимальную ширину всплывающего меню
+vim.opt.pumblend = 10  -- Сделать меню полупрозрачным для лучшего восприятия
+
+
+
+--
+--
+-- local nvim_lsp = require('lspconfig')
+--
+-- nvim_lsp.pylsp.setup({
+--   capabilities = require('cmp_nvim_lsp').default_capabilities(),
+--   settings = {
+--     pylsp = {
+--       plugins = {
+--         pycodestyle = { enabled = true, ignore = {'W391'}, maxLineLength = 88 },
+--         pyflakes = { enabled = true },
+--         pylint = { enabled = false },
+--         yapf = { enabled = false },
+--       },
+--     },
+--   },
+-- })
