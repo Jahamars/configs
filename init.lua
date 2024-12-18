@@ -53,7 +53,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
-Plug 'preservim/vim-markdown'
 Plug 'numToStr/Comment.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -62,18 +61,26 @@ Plug 'neovim/nvim-lspconfig' " LSP для настройки clangd
 Plug 'hrsh7th/cmp-nvim-lsp'  " Источник для LSP
 Plug 'hrsh7th/cmp-path'      " Источник для путей
 Plug 'nvim-lualine/lualine.nvim'
-"Plug 'norcalli/nvim-colorizer.lua'
-"Plug 'sindrets/diffview.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'folke/noice.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'rcarriga/nvim-notify'
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+"Plug 'Pocco81/TrueZen.nvim'
+"Plug 'preservim/vim-markdown'
+"Plug 'lukas-reineke/headlines.nvim'
+"Plug 'sindrets/diffview.nvim'
+"Plug 'L3MON4D3/LuaSnip' 
 call plug#end()
 ]])
---Plug 'L3MON4D3/LuaSnip'      " Сниппеты
+
+
 
 vim.cmd("syntax enable")        -- Включение подсветки синтаксиса
 vim.cmd("set background=dark") -- Или 'light', если нужно
 vim.cmd("colorscheme gruvbox") -- Применить Gruvbox
+vim.cmd("set colorcolumn=88") -- линия на 88 строке 
 
 
 
@@ -188,6 +195,19 @@ nvim_lsp.pylsp.setup({
 })
 
 
+-- Настройка rust-analyzer
+require('lspconfig').rust_analyzer.setup({
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    on_attach = function(client, bufnr)
+        local buf_map = vim.api.nvim_buf_set_keymap
+        local opts = { noremap = true, silent = true }
+        buf_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        buf_map(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        buf_map(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+        buf_map(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    end,
+})
+
 
 
 -- -- go to last change line at the start 
@@ -214,11 +234,11 @@ vim.api.nvim_set_keymap('v', '<Tab>', '>gv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<S-Tab>', '<gv', { noremap = true, silent = true })
 
 
--- -- colorizer 
--- require'colorizer'.setup({
---   '*', -- Подключить для всех файлов
---   css = { rgb_fn = true }, -- Включить поддержку rgb() в CSS
--- }, { mode = 'background' })
+-- colorizer 
+require'colorizer'.setup({
+  '*', -- Подключить для всех файлов
+  css = { rgb_fn = true }, -- Включить поддержку rgb() в CSS
+}, { mode = 'background' })
 
 
 -- Добавить новую строку ниже при Alt+O
@@ -295,5 +315,56 @@ require("noice").setup({
 })
 
 
+
+
 -- hiding comandline
 vim.opt.cmdheight = 0
+
+
+
+-- create the highlight groups in the highlight setup hook, so they are reset
+-- every time the colorscheme changes
+require("ibl").setup()
+
+local highlight = {
+    "RainbowRed",
+    "RainbowYellow",
+    "RainbowBlue",
+    "RainbowOrange",
+    "RainbowGreen",
+    "RainbowViolet",
+    "RainbowCyan",
+}
+
+local hooks = require "ibl.hooks"
+
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+    vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#fb4934" })     -- Красный
+    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#fabd2f" })  -- Жёлтый
+    vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#83a598" })    -- Голубой
+    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#fe8019" })  -- Оранжевый
+    vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#b8bb26" })   -- Зелёный
+    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#d3869b" })  -- Фиолетовый
+    vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#8ec07c" })    -- Циан
+end)
+
+require("ibl").setup { indent = { highlight = highlight } }
+
+
+
+
+
+--
+-- require("true-zen").setup {
+--   modes = {
+--     ataraxis = { -- Режим "Zen"
+--       left_padding = 30,  -- Отступ слева
+--       right_padding = 30, -- Отступ справа
+--       top_padding = 2,    -- Отступ сверху
+--       bottom_padding = 2, -- Отступ снизу
+--       ideal_writing_area_width = { 0.85 }, -- Ширина текста (в процентах от экрана)
+--     },
+--   },
+-- }
+--
+
