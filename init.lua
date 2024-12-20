@@ -5,6 +5,10 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard:append("unnamedplus")
 
+
+
+vim.opt.numberwidth = 4         -- Устанавливаем корректное значение ширины
+
 -- Синтаксис и скроллинг
 vim.cmd("syntax on")
 vim.opt.scrolloff = 8
@@ -50,30 +54,126 @@ vim.opt.termguicolors = true
 -- или для совместимости с vim-plug
 vim.cmd([[
 call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'numToStr/Comment.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'mg979/vim-visual-multi'
-Plug 'neovim/nvim-lspconfig' " LSP для настройки clangd
-Plug 'hrsh7th/cmp-nvim-lsp'  " Источник для LSP
-Plug 'hrsh7th/cmp-path'      " Источник для путей
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'norcalli/nvim-colorizer.lua'
-Plug 'folke/noice.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'rcarriga/nvim-notify'
-Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'morhetz/gruvbox'                    " тема 
+Plug 'hrsh7th/nvim-cmp'                   " для автодоп 
+Plug 'hrsh7th/cmp-buffer'                 " для автодоп 
+Plug 'numToStr/Comment.nvim'              " для коментариев 
+Plug 'nvim-telescope/telescope.nvim'      " telescope
+Plug 'nvim-lua/plenary.nvim'              " зависисмость для telescope 
+Plug 'mg979/vim-visual-multi'             " мултикурсор 
+Plug 'neovim/nvim-lspconfig'              " LSP для настройки clangd
+Plug 'hrsh7th/cmp-nvim-lsp'               " Источник для LSP
+Plug 'hrsh7th/cmp-path'                   " Источник для путей
+Plug 'nvim-lualine/lualine.nvim'          " строка состояние 
+Plug 'norcalli/nvim-colorizer.lua'        " цвета 
+Plug 'folke/noice.nvim'                   " сообшение подсказки для командной строки 
+Plug 'MunifTanjim/nui.nvim'               " зависимость для noice 
+Plug 'rcarriga/nvim-notify'               " уведомлние 
+Plug 'lukas-reineke/indent-blankline.nvim'" линии отступов 
+Plug 'sphamba/smear-cursor.nvim'         " for cursor efect 
 
-"Plug 'Pocco81/TrueZen.nvim'
-"Plug 'preservim/vim-markdown'
-"Plug 'lukas-reineke/headlines.nvim'
-"Plug 'sindrets/diffview.nvim'
-"Plug 'L3MON4D3/LuaSnip' 
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects' " Текстовые объекты
+Plug 'nvim-treesitter/playground'                  " Интерактивное дерево синтаксиса
+Plug 'nvim-treesitter/nvim-treesitter-context'     " Индикация текущего контекста
+
+
+"Plug 'bash-lsp/bash-language-server', { 'do': 'npm install -g bash-language-server' }
+"Plug 'Pocco81/TrueZen.nvim'               " zen mode 
+"Plug 'sindrets/diffview.nvim'            " сравнение для гит 
+"Plug 'L3MON4D3/LuaSnip'                  " сниппеты 
 call plug#end()
 ]])
+
+
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "c", "cpp", "python", "lua", "rust", "bash", "javascript" }, -- Укажите ваши языки
+  sync_install = false, -- Установка синхронно (true для медленных систем)
+  auto_install = true,  -- Автоматическая установка языков при открытии файла
+  highlight = {
+    enable = true,              -- Включить подсветку
+    additional_vim_regex_highlighting = false, -- Отключить стандартную подсветку
+  },
+  indent = {
+    enable = true,              -- Включить авто-отступы
+  },
+  textobjects = {                -- Настройка текстовых объектов
+    select = {
+      enable = true,
+      lookahead = true,          -- Подсказка ближайшего объекта
+      keymaps = {
+        ["af"] = "@function.outer", -- Выбрать всю функцию
+        ["if"] = "@function.inner", -- Внутри функции
+        ["ac"] = "@class.outer",    -- Весь класс
+        ["ic"] = "@class.inner",    -- Внутри класса
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- Добавить перемещения в историю `jump`
+      goto_next_start = {
+        ["]f"] = "@function.outer",
+        ["]c"] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[f"] = "@function.outer",
+        ["[c"] = "@class.outer",
+      },
+    },
+  },
+  playground = {
+    enable = true,
+    updatetime = 25,            -- Время обновления в миллисекундах
+    persist_queries = false,    -- Не сохранять запросы между сессиями
+  },
+}
+
+-- Настройка индикации текущего контекста
+require'treesitter-context'.setup{
+  enable = true,                -- Включить
+  throttle = true,              -- Обновлять при прокрутке
+  max_lines = 0,                -- Показать весь контекст (0 - без ограничений)
+}
+
+
+
+
+-- Ключи для Playground
+vim.api.nvim_set_keymap('n', '<leader>tp', ':TSPlaygroundToggle<CR>', { noremap = true, silent = true })
+
+-- Ключи для навигации по текстовым объектам
+vim.api.nvim_set_keymap('n', '[f', '<cmd>lua vim.treesitter.goto_prev_start("@function.outer")<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', ']f', '<cmd>lua vim.treesitter.goto_next_start("@function.outer")<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '[c', '<cmd>lua vim.treesitter.goto_prev_start("@class.outer")<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', ']c', '<cmd>lua vim.treesitter.goto_next_start("@class.outer")<CR>', { silent = true })
+
+
+
+--cursor efect
+require('smear_cursor').setup({
+    opts =
+    {
+        -- Smear cursor when switching buffers or windows.
+        smear_between_buffers = true,
+
+        -- Smear cursor when moving within line or to neighbor lines.
+        smear_between_neighbor_lines = true,
+
+        -- Draw the smear in buffer space instead of screen space when scrolling
+        scroll_buffer_space = true,
+
+        -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
+        -- Smears will blend better on all backgrounds.
+        legacy_computing_symbols_support = false,
+        stiffness = 0.8,               -- 0.6      [0, 1]
+        trailing_stiffness = 0.5,      -- 0.3      [0, 1]
+        distance_stop_animating = 0.5, -- 0.1      > 0
+        hide_target_hack = false, 
+    },
+    cursor_color = '#928374',
+})
 
 
 
@@ -91,7 +191,7 @@ vim.api.nvim_set_keymap('v', '<Tab>', '>gv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<S-Tab>', '<gv', { noremap = true, silent = true })
 
 
-
+-- удаление без копирование 
 vim.keymap.set('n', 'd', '"_d', { noremap = true })
 vim.keymap.set('n', 'dd', '"_dd', { noremap = true })
 vim.keymap.set('x', 'd', '"_d', { noremap = true })
@@ -351,10 +451,7 @@ end)
 require("ibl").setup { indent = { highlight = highlight } }
 
 
-
-
-
---
+-- -- zen mode 
 -- require("true-zen").setup {
 --   modes = {
 --     ataraxis = { -- Режим "Zen"
@@ -368,3 +465,96 @@ require("ibl").setup { indent = { highlight = highlight } }
 -- }
 --
 
+
+
+
+-- -- Подключаем LSP
+-- local lspconfig = require('lspconfig')
+--
+-- -- Настройка Bash LSP
+-- lspconfig.bashls.setup{}
+--
+-- -- Подключаем nvim-cmp
+-- local cmp = require('cmp')
+--
+-- cmp.setup({
+--   snippet = {
+--     expand = function(args)
+--       vim.fn["vsnip#anonymous"](args.body) -- Можно заменить на другой сникет-движок
+--     end,
+--   },
+--   mapping = {
+--     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+--     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+--     ['<C-Space>'] = cmp.mapping.complete(),
+--     ['<C-e>'] = cmp.mapping.abort(),
+--     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Подтвердить выбор
+--   },
+--   sources = cmp.config.sources({
+--     { name = 'nvim_lsp' },
+--     { name = 'buffer' },
+--     { name = 'path' },
+--   })
+-- })
+--
+-- -- Подключаем LSP к nvim-cmp
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- lspconfig.bashls.setup{
+--   capabilities = capabilities,
+-- }
+--
+
+
+
+
+
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+-- Переключение между окнами с Alt + w
+map('n', '<A-w>h', '<C-w>h', opts)
+map('n', '<A-w>j', '<C-w>j', opts)
+map('n', '<A-w>k', '<C-w>k', opts)
+map('n', '<A-w>l', '<C-w>l', opts)
+
+-- Закрыть текущее окно
+map('n', '<A-w>c', '<C-w>c', opts)
+
+-- Увеличить/уменьшить размер окна
+map('n', '<A-w>+', '<C-w>+', opts)
+map('n', '<A-w>-', '<C-w>-', opts)
+
+-- Разделение окна (сплиты)
+map('n', '<A-w>s', ':split<CR>', opts)
+map('n', '<A-w>v', ':vsplit<CR>', opts)
+
+-- Переключение размера окон (максимизировать/уменьшить)
+map('n', '<A-w>=', '<C-w>=', opts)
+map('n', '<A-w>_', '<C-w>_', opts)
+
+-- Закрыть все окна кроме текущего
+map('n', '<A-w>o', '<C-w>o', opts)
+
+
+
+
+local telescope = require('telescope.builtin')
+
+-- Создаём пользовательскую команду Tabbi
+vim.api.nvim_create_user_command('Tabbi', function()
+  telescope.oldfiles({
+    prompt_title = "Recent Files (Split Mode)",
+    attach_mappings = function(_, map)
+      map('i', '<CR>', function(prompt_bufnr)
+        local action_state = require('telescope.actions.state')
+        local actions = require('telescope.actions')
+        local selected_entry = action_state.get_selected_entry()
+        actions.close(prompt_bufnr)
+
+        -- Открытие файла в горизонтальном сплите
+        vim.cmd('split ' .. selected_entry.value)
+      end)
+      return true
+    end,
+  })
+end, { desc = "Open recent files in horizontal split" })
